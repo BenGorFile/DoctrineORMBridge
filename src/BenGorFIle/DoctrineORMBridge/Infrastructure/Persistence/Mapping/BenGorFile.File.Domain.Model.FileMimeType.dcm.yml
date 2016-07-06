@@ -9,7 +9,7 @@
 BenGorFile\File\Domain\Model\FileMimeType:
     type: embeddable
     fields:
-        extension:
+        mimeType:
             column: mime_type
             length: 100
             type: string

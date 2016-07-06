@@ -23,7 +23,7 @@ BenGorFile\File\Domain\Model\File:
         name:
             class: BenGor\File\Domain\Model\FileName
             columnPrefix: false
-        extension:
+        mimeType:
             class: BenGor\File\Domain\Model\FileMimeType
             columnPrefix: false
     fields:
