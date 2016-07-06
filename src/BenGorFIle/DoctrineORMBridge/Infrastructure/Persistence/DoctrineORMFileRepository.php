@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace BenGorFIle\DoctrineORMBridge\Infrastructure\Persistence;
+namespace BenGorFile\DoctrineORMBridge\Infrastructure\Persistence;
 
 use BenGorFile\File\Domain\Model\File;
 use BenGorFile\File\Domain\Model\FileId;

@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace BenGorFIle\DoctrineORMBridge\Infrastructure\Persistence\Types;
+namespace BenGorFile\DoctrineORMBridge\Infrastructure\Persistence\Types;
 
 use BenGorFile\File\Domain\Model\FileId;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
