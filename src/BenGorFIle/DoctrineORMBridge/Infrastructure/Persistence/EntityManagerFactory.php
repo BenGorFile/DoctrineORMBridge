@@ -35,7 +35,7 @@ class EntityManagerFactory
      */
     public function build($aConnection, $isDevMode = true)
     {
-        Type::addType('user_id', FileIdType::class);
+        Type::addType('file_id', FileIdType::class);
 
         return EntityManager::create(
             $aConnection,

@@ -17,7 +17,7 @@ $ composer require bengor-file/doctrine-orm-bridge
 ```
 
 ##Documentation
-All the documentation is stored inside the [user library](https://github.com/BenGorFile/File/blob/master/docs/index.md).
+All the documentation is stored inside the [file library](https://github.com/BenGorFile/File/blob/master/docs/index.md).
 
 ##Tests
 This library is completely tested by **[PHPSpec][1], SpecBDD framework for PHP**.
