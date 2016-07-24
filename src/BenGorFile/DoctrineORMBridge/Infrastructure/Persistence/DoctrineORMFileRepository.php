@@ -45,6 +45,14 @@ final class DoctrineORMFileRepository extends EntityRepository implements FileRe
     /**
      * {@inheritdoc}
      */
+    public function all()
+    {
+        return $this->findAll();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function persist(File $aFile)
     {
         $this->getEntityManager()->persist($aFile);
