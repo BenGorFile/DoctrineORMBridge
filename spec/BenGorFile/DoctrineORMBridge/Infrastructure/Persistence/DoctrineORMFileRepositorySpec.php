@@ -126,8 +126,8 @@ class DoctrineORMFileRepositorySpec extends ObjectBehavior
         $queryBuilder->select('f')->shouldBeCalled()->willReturn($queryBuilder);
         $queryBuilder->from(null, 'f', null)->shouldBeCalled()->willReturn($queryBuilder);
 
-        $func->__toString()->willReturn('COUNT(file.id.id)');
-        $expr->count('f.id.id')->shouldBeCalled()->willReturn($func);
+        $func->__toString()->willReturn('COUNT(file.id)');
+        $expr->count('f.id')->shouldBeCalled()->willReturn($func);
         $queryBuilder->select($func)->shouldBeCalled()->willReturn($queryBuilder);
         $queryBuilder->getQuery()->shouldBeCalled()->willReturn($query);
         $query->getSingleScalarResult()->shouldBeCalled()->willReturn(2);

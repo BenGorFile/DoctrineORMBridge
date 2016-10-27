@@ -74,7 +74,7 @@ final class DoctrineORMFileRepository extends EntityRepository implements FileRe
         $queryBuilder = $this->createQueryBuilder('f');
 
         return $queryBuilder
-            ->select($queryBuilder->expr()->count('f.id.id'))
+            ->select($queryBuilder->expr()->count('f.id'))
             ->getQuery()
             ->getSingleScalarResult();
     }
