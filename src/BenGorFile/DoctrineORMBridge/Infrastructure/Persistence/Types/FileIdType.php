@@ -40,6 +40,10 @@ class FileIdType extends GuidType
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
+        if (null === $value) {
+            return null;
+        }
+
         return new FileId($value);
     }
 
