@@ -46,6 +46,14 @@ final class DoctrineORMFileRepository extends EntityRepository implements FileRe
     /**
      * {@inheritdoc}
      */
+    public function singleResultQuery($aSpecification)
+    {
+        return $aSpecification->buildQuery($this->getEntityManager()->createQueryBuilder())->getOneOrNullResult();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function count($aSpecification)
     {
         if (null === $aSpecification) {
