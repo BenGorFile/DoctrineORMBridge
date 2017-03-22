@@ -22,6 +22,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Persisters\Entity\EntityPersister;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\UnitOfWork;
@@ -61,7 +62,7 @@ class DoctrineORMFileRepositorySpec extends ObjectBehavior
         $this->fileOfId(new FileId('file-id'))->shouldReturn($file);
     }
 
-    function it_get_file_of_name(
+    function it_query(
         File $file,
         EntityManager $manager,
         UnitOfWork $unitOfWork,
@@ -69,17 +70,14 @@ class DoctrineORMFileRepositorySpec extends ObjectBehavior
     ) {
         $manager->getUnitOfWork()->shouldBeCalled()->willReturn($unitOfWork);
         $unitOfWork->getEntityPersister(null)->shouldBeCalled()->willReturn($entityPersister);
-        $entityPersister->load(
-            ['name.name' => 'my-pdf-file', 'name.extension' => 'pdf'],
-            null,
-            null,
+        $entityPersister->loadAll(
             [],
             null,
-            1,
+            null,
             null
-        )->shouldBeCalled()->willReturn($file);
+        )->shouldBeCalled()->willReturn([$file]);
 
-        $this->fileOfName(new FileName('my-pdf-file.pdf'))->shouldReturn($file);
+        $this->query(null)->shouldReturn([$file]);
     }
 
     function it_gets_all_files(
@@ -114,7 +112,7 @@ class DoctrineORMFileRepositorySpec extends ObjectBehavior
         $this->remove($file);
     }
 
-    function it_gets_the_file_table_size(
+    function it_gets_the_file_table_count(
         EntityManager $manager,
         QueryBuilder $queryBuilder,
         Expr $expr,
@@ -132,6 +130,6 @@ class DoctrineORMFileRepositorySpec extends ObjectBehavior
         $queryBuilder->getQuery()->shouldBeCalled()->willReturn($query);
         $query->getSingleScalarResult()->shouldBeCalled()->willReturn(2);
 
-        $this->size()->shouldReturn(2);
+        $this->count(null)->shouldReturn(2);
     }
 }

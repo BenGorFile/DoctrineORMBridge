@@ -14,7 +14,6 @@ namespace BenGorFile\DoctrineORMBridge\Infrastructure\Persistence;
 
 use BenGorFile\File\Domain\Model\File;
 use BenGorFile\File\Domain\Model\FileId;
-use BenGorFile\File\Domain\Model\FileName;
 use BenGorFile\File\Domain\Model\FileRepository;
 use Doctrine\ORM\EntityRepository;
 
@@ -37,9 +36,30 @@ final class DoctrineORMFileRepository extends EntityRepository implements FileRe
     /**
      * {@inheritdoc}
      */
-    public function fileOfName(FileName $aName)
+    public function query($aSpecification)
     {
-        return $this->findOneBy(['name.name' => $aName->name(), 'name.extension' => $aName->extension()]);
+        return null === $aSpecification
+            ? $this->findAll()
+            : $aSpecification->buildQuery($this->getEntityManager()->createQueryBuilder())->getResult();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count($aSpecification)
+    {
+        if (null === $aSpecification) {
+            $queryBuilder = $this->createQueryBuilder('f');
+
+            return (int) $queryBuilder
+                ->select($queryBuilder->expr()->count('f.id'))
+                ->getQuery()
+                ->getSingleScalarResult();
+        }
+
+        return (int) $aSpecification->buildCount(
+            $this->getEntityManager()->createQueryBuilder()
+        )->getSingleScalarResult();
     }
 
     /**
@@ -64,18 +84,5 @@ final class DoctrineORMFileRepository extends EntityRepository implements FileRe
     public function remove(File $aFile)
     {
         $this->getEntityManager()->remove($aFile);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function size()
-    {
-        $queryBuilder = $this->createQueryBuilder('f');
-
-        return $queryBuilder
-            ->select($queryBuilder->expr()->count('f.id'))
-            ->getQuery()
-            ->getSingleScalarResult();
     }
 }
