@@ -41,7 +41,7 @@ class DoctrineORMFilterByNameSpecification implements DoctrineORMQuerySpecificat
     {
         return $queryBuilder
             ->select($queryBuilder->expr()->count('f.id'))
-            ->where($queryBuilder->expr()->eq('f.name.name', ':name'))
+            ->where($queryBuilder->expr()->like('f.name.name', ':name'))
             ->setParameter('name', '%' . $this->name->name() . '%')
             ->getQuery();
     }
