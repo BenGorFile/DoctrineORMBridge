@@ -12,14 +12,14 @@
 
 namespace BenGorFile\DoctrineORMBridge\Infrastructure\Persistence;
 
-use BenGorFile\File\Domain\Model\File;
 use BenGorFile\File\Domain\Model\FileName;
 use Doctrine\ORM\QueryBuilder;
+use LIN3S\SharedKernel\Infrastructure\Persistence\Doctrine\ORM\DoctrineCountSpecification;
 
 /**
  * @author Beñat Espiña <benatespina@gmail.com>
  */
-class DoctrineORMFilterByNameSpecification
+class DoctrineORMFilterByNameSpecification implements DoctrineORMQuerySpecification, DoctrineCountSpecification
 {
     private $name;
 
@@ -32,8 +32,16 @@ class DoctrineORMFilterByNameSpecification
     {
         return $queryBuilder
             ->select('f')
-            ->from(File::class, 'f')
             ->where($queryBuilder->expr()->like('f.name.name', ':name'))
+            ->setParameter('name', '%' . $this->name->name() . '%')
+            ->getQuery();
+    }
+
+    public function buildCount(QueryBuilder $queryBuilder)
+    {
+        return $queryBuilder
+            ->select($queryBuilder->expr()->count('f.id'))
+            ->where($queryBuilder->expr()->eq('f.name.name', ':name'))
             ->setParameter('name', '%' . $this->name->name() . '%')
             ->getQuery();
     }

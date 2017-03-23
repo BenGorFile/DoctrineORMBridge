@@ -40,7 +40,7 @@ final class DoctrineORMFileRepository extends EntityRepository implements FileRe
     {
         return null === $aSpecification
             ? $this->findAll()
-            : $aSpecification->buildQuery($this->getEntityManager()->createQueryBuilder())->getResult();
+            : $aSpecification->buildQuery($this->createQueryBuilder('f'))->getResult();
     }
 
     /**
@@ -57,7 +57,7 @@ final class DoctrineORMFileRepository extends EntityRepository implements FileRe
     public function count($aSpecification)
     {
         if (null === $aSpecification) {
-            $queryBuilder = $this->createQueryBuilder('f');
+            $queryBuilder = $this->getEntityManager()->createQueryBuilder();
 
             return (int) $queryBuilder
                 ->select($queryBuilder->expr()->count('f.id'))
@@ -66,7 +66,7 @@ final class DoctrineORMFileRepository extends EntityRepository implements FileRe
         }
 
         return (int) $aSpecification->buildCount(
-            $this->getEntityManager()->createQueryBuilder()
+            $this->createQueryBuilder('f')
         )->getSingleScalarResult();
     }
 

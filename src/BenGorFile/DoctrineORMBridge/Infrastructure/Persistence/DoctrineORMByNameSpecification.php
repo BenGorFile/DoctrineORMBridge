@@ -12,14 +12,13 @@
 
 namespace BenGorFile\DoctrineORMBridge\Infrastructure\Persistence;
 
-use BenGorFile\File\Domain\Model\File;
 use BenGorFile\File\Domain\Model\FileName;
 use Doctrine\ORM\QueryBuilder;
 
 /**
  * @author Beñat Espiña <benatespina@gmail.com>
  */
-class DoctrineORMByNameSpecification
+class DoctrineORMByNameSpecification implements DoctrineORMQuerySpecification
 {
     private $name;
 
@@ -32,7 +31,6 @@ class DoctrineORMByNameSpecification
     {
         return $queryBuilder
             ->select('f')
-            ->from(File::class, 'f')
             ->where($queryBuilder->expr()->eq('f.name.name', ':name'))
             ->andWhere($queryBuilder->expr()->eq('f.name.extension', ':extension'))
             ->setParameter('name', $this->name->name())
