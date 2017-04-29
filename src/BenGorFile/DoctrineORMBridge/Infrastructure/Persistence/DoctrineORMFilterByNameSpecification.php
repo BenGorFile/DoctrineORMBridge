@@ -12,7 +12,6 @@
 
 namespace BenGorFile\DoctrineORMBridge\Infrastructure\Persistence;
 
-use BenGorFile\File\Domain\Model\FileName;
 use Doctrine\ORM\QueryBuilder;
 use LIN3S\SharedKernel\Infrastructure\Persistence\Doctrine\ORM\DoctrineCountSpecification;
 
@@ -22,27 +21,46 @@ use LIN3S\SharedKernel\Infrastructure\Persistence\Doctrine\ORM\DoctrineCountSpec
 class DoctrineORMFilterByNameSpecification implements DoctrineORMQuerySpecification, DoctrineCountSpecification
 {
     private $name;
+    private $offset;
+    private $limit;
 
-    public function __construct(FileName $aName)
+    public function __construct($aName, $offset, $limit)
     {
         $this->name = $aName;
+        $this->offset = $offset;
+        $this->limit = $limit;
     }
 
     public function buildQuery(QueryBuilder $queryBuilder)
     {
+        if ($this->limit > 0) {
+            $queryBuilder->setMaxResults($this->limit);
+        }
+
+        if (!empty($this->name)) {
+            $queryBuilder
+                ->where($queryBuilder->expr()->like('f.name.name', ':name'))
+                ->setParameter('name', '%' . $this->name . '%');
+        }
+
         return $queryBuilder
             ->select('f')
-            ->where($queryBuilder->expr()->like('f.name.name', ':name'))
-            ->setParameter('name', '%' . $this->name->name() . '%')
+            ->setFirstResult($this->offset)
             ->getQuery();
     }
 
     public function buildCount(QueryBuilder $queryBuilder)
     {
+        if (!empty($this->name)) {
+            $queryBuilder
+                ->where($queryBuilder->expr()->like('f.name.name', ':name'))
+                ->setParameter('name', '%' . $this->name . '%');
+        }
+
         return $queryBuilder
             ->select($queryBuilder->expr()->count('f.id'))
             ->where($queryBuilder->expr()->like('f.name.name', ':name'))
-            ->setParameter('name', '%' . $this->name->name() . '%')
+            ->setParameter('name', '%' . $this->name . '%')
             ->getQuery();
     }
 }

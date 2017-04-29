@@ -20,9 +20,9 @@ use BenGorFile\File\Domain\Model\FileSpecificationFactory;
  */
 class DoctrineORMFileSpecificationFactory implements FileSpecificationFactory
 {
-    public function buildFilterByNameSpecification(FileName $fileName)
+    public function buildFilterByNameSpecification($fileName, $offset = 0, $limit = -1)
     {
-        return new DoctrineORMFilterByNameSpecification($fileName);
+        return new DoctrineORMFilterByNameSpecification($fileName, $offset, $limit);
     }
 
     public function buildByNameSpecification(FileName $fileName)
