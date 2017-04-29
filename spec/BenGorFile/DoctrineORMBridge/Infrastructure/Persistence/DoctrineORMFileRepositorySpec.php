@@ -78,24 +78,6 @@ class DoctrineORMFileRepositorySpec extends ObjectBehavior
         $this->query(null)->shouldReturn([$file]);
     }
 
-    function it_gets_all_files(
-        File $file,
-        EntityManager $manager,
-        UnitOfWork $unitOfWork,
-        EntityPersister $entityPersister
-    ) {
-        $manager->getUnitOfWork()->shouldBeCalled()->willReturn($unitOfWork);
-        $unitOfWork->getEntityPersister(null)->shouldBeCalled()->willReturn($entityPersister);
-        $entityPersister->loadAll(
-            [],
-            null,
-            null,
-            null
-        )->shouldBeCalled()->willReturn([$file]);
-
-        $this->all()->shouldReturn([$file]);
-    }
-
     function it_persist(EntityManager $manager, File $file)
     {
         $manager->persist($file)->shouldBeCalled();
