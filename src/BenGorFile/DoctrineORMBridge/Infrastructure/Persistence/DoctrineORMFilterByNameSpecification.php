@@ -46,6 +46,7 @@ class DoctrineORMFilterByNameSpecification implements DoctrineORMQuerySpecificat
         return $queryBuilder
             ->select('f')
             ->setFirstResult($this->offset)
+            ->orderBy('f.updatedOn', 'DESC')
             ->getQuery();
     }
 
