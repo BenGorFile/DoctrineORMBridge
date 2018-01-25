@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": "^5.5 || ^7.0",
-        "bengor-file/file": "^0.4",
+        "bengor-file/file": ">=0.5",
         "doctrine/orm": "^2.5"
     },
     "require-dev": {

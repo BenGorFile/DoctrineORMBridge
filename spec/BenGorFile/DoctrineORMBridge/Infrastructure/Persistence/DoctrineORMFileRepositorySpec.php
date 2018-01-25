@@ -108,6 +108,6 @@ class DoctrineORMFileRepositorySpec extends ObjectBehavior
         $queryBuilder->getQuery()->shouldBeCalled()->willReturn($query);
         $query->getSingleScalarResult()->shouldBeCalled()->willReturn(2);
 
-        $this->count(null)->shouldReturn(2);
+        $this->length(null)->shouldReturn(2);
     }
 }
