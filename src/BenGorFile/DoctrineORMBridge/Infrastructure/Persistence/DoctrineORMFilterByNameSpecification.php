@@ -13,12 +13,11 @@
 namespace BenGorFile\DoctrineORMBridge\Infrastructure\Persistence;
 
 use Doctrine\ORM\QueryBuilder;
-use LIN3S\SharedKernel\Infrastructure\Persistence\Doctrine\ORM\DoctrineCountSpecification;
 
 /**
  * @author Beñat Espiña <benatespina@gmail.com>
  */
-class DoctrineORMFilterByNameSpecification implements DoctrineORMQuerySpecification, DoctrineCountSpecification
+class DoctrineORMFilterByNameSpecification implements DoctrineORMQuerySpecification, DoctrineORMCountSpecification
 {
     private $name;
     private $offset;

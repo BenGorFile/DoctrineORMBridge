@@ -25,6 +25,11 @@ class DoctrineORMFileSpecificationFactory implements FileSpecificationFactory
         return new DoctrineORMFilterByNameSpecification($fileName, $offset, $limit);
     }
 
+    public function buildListOfIdsSpecification(array $ids, $offset = 0, $limit = -1)
+    {
+        return new DoctrineORMListOfIdsSpecification($ids);
+    }
+
     public function buildByNameSpecification(FileName $fileName)
     {
         return new DoctrineORMByNameSpecification($fileName);
